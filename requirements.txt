@@ -1,38 +1,45 @@
 # ============================================
-# Automated Invoice Processing System
-# Python Dependencies (Python 3.14+)
+# Automated Invoice Processing System (Arabic-First)
+# Python Dependencies
 # ============================================
 
-# --- Web Framework ---
-fastapi>=0.115.0
-uvicorn[standard]>=0.34.0
-
-# --- Database ---
-sqlalchemy>=2.0.41
-alembic>=1.15.0
-
-# --- Validation & Configuration ---
+# --- Configuration ---
 pydantic>=2.11.0
 pydantic-settings>=2.9.0
 python-dotenv>=1.1.0
 
-# --- OCR & Image Processing ---
-pytesseract>=0.3.13
+# --- AWS SDK ---
+boto3>=1.38.0
+botocore>=1.38.0
+
+# --- LangChain / LangGraph (Agent Orchestration) ---
+langchain>=0.3.0
+langchain-aws>=0.2.0
+langgraph>=0.4.0
+
+# --- Arabic Text Processing ---
+python-bidi>=0.6.6
+arabic-reshaper>=3.0.0
+
+# --- Hijri Date Conversion ---
+hijri-converter>=2.3.0
+
+# --- Image Processing ---
 Pillow>=12.0.0
-pdf2image>=1.17.0
 
 # --- PDF Handling ---
 PyPDF2>=3.0.1
 
-# --- File Uploads ---
-python-multipart>=0.0.20
-
 # --- HTTP Client ---
 httpx>=0.28.0
+
+# --- Utilities ---
+python-dateutil>=2.9.0
 
 # --- Testing ---
 pytest>=8.4.0
 pytest-asyncio>=0.25.0
+moto>=5.1.0           # AWS service mocking
 
-# --- Utilities ---
-python-dateutil>=2.9.0
+# --- Logging ---
+structlog>=25.1.0

@@ -1,1 +1,1 @@
-# Automated Invoice Processing System - Backend Package
+# Automated Invoice Processing System — Backend Package
