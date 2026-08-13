@@ -8,7 +8,7 @@
 - [x] Create backend `__init__.py` files
 
 ## 2. Arabic Preprocessing Module (الوحدة الرئيسية)
-- [ ] `src/arabic/numerals.py` — Eastern Arabic ↔ Western numeral conversion
+- [x] `src/arabic/numerals.py` — Eastern Arabic ↔ Western numeral conversion
 - [ ] `src/arabic/normalizer.py` — Arabic text normalization (hamza, tashkeel)
 - [ ] `src/arabic/hijri.py` — Hijri date detection & Gregorian conversion
 - [ ] `src/arabic/field_mapper.py` — Arabic field label → schema field mapping
