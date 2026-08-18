@@ -10,7 +10,7 @@
 ## 2. Arabic Preprocessing Module (الوحدة الرئيسية)
 - [x] `src/arabic/numerals.py` — Eastern Arabic ↔ Western numeral conversion
 - [x] `src/arabic/normalizer.py` — Arabic text normalization (hamza, tashkeel)
-- [ ] `src/arabic/hijri.py` — Hijri date detection & Gregorian conversion
+- [x] `src/arabic/hijri.py` — Hijri date detection & Gregorian conversion
 - [ ] `src/arabic/field_mapper.py` — Arabic field label → schema field mapping
 - [ ] `src/arabic/currencies.py` — MENA currency detection
 - [ ] `src/arabic/preprocessor.py` — Unified Arabic preprocessing pipeline
