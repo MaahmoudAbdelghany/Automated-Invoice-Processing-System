@@ -7,6 +7,6 @@
 
 ## 2. Step-by-Step Task Execution & GitHub Sync
 - **One Step at a Time**: Execute only one step of a task plan in a turn.
-- **Explain Progress**: After completing each step, explain clearly what was done and what changed.
+- **Explain Progress**: After completing each step, explain clearly what was done and why.
 - **Commit & Push**: Commit all changes for that step and push them to the GitHub repository.
 - **Wait for Approval**: Stop and ask the user for explicit permission/approval ("go ahead") before moving to the next step. Do NOT proceed without explicit user approval.

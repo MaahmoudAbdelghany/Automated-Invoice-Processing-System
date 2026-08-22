@@ -12,7 +12,7 @@
 - [x] `src/arabic/normalizer.py` — Arabic text normalization (hamza, tashkeel)
 - [x] `src/arabic/hijri.py` — Hijri date detection & Gregorian conversion
 - [x] `src/arabic/field_mapper.py` — Arabic field label → schema field mapping
-- [ ] `src/arabic/currencies.py` — MENA currency detection
+- [x] `src/arabic/currencies.py` — MENA currency detection
 - [ ] `src/arabic/preprocessor.py` — Unified Arabic preprocessing pipeline
 
 ## 3. OCR Module
