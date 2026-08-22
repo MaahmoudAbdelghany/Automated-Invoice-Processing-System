@@ -1,7 +1,8 @@
 """
 Arabic Preprocessing Module (الوحدة الرئيسية).
 Provides Eastern/Western numeral conversion, text normalization,
-Hijri date handling, Arabic field mapping, and MENA currency detection/parsing.
+Hijri date handling, Arabic field mapping, MENA currency detection/parsing,
+and unified Arabic preprocessor pipeline.
 """
 
 from src.arabic.currencies import (
@@ -45,6 +46,12 @@ from src.arabic.numerals import (
     to_eastern_numerals,
     to_western_numerals,
 )
+from src.arabic.preprocessor import (
+    ArabicPreprocessor,
+    PreprocessedInvoiceData,
+    preprocess,
+    preprocess_arabic_invoice,
+)
 
 __all__ = [
     # Numerals
@@ -83,4 +90,9 @@ __all__ = [
     "is_valid_currency_code",
     "VAT_RATES",
     "ARABIC_CURRENCY_SYMBOLS",
+    # Preprocessor
+    "ArabicPreprocessor",
+    "PreprocessedInvoiceData",
+    "preprocess_arabic_invoice",
+    "preprocess",
 ]

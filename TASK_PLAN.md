@@ -13,7 +13,7 @@
 - [x] `src/arabic/hijri.py` — Hijri date detection & Gregorian conversion
 - [x] `src/arabic/field_mapper.py` — Arabic field label → schema field mapping
 - [x] `src/arabic/currencies.py` — MENA currency detection
-- [ ] `src/arabic/preprocessor.py` — Unified Arabic preprocessing pipeline
+- [x] `src/arabic/preprocessor.py` — Unified Arabic preprocessing pipeline
 
 ## 3. OCR Module
 - [ ] `src/ocr/textract_client.py` — Textract AnalyzeExpense + AnalyzeDocument

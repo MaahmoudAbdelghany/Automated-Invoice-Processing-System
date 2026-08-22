@@ -5,6 +5,7 @@ invoices to standard canonical schema fields using normalized matching and fuzzy
 """
 
 import difflib
+import re
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.arabic.normalizer import normalize_arabic
@@ -236,17 +237,28 @@ def map_arabic_label(label: str, threshold: float = 0.8) -> Optional[str]:
     if clean_label in _NORMALIZED_FIELD_MAP:
         return _NORMALIZED_FIELD_MAP[clean_label]
 
+    # 1b. Check bilingual split (e.g. 'Date / التاريخ', 'TRN / الرقم الضريبي', 'Subtotal / المجموع الفرعي')
+    if "/" in label or "|" in label or " - " in label:
+        parts = re.split(r"[/|]|\s+-\s+", label)
+        for part in parts:
+            part_str = part.strip()
+            if part_str:
+                clean_part = _normalize_label(part_str)
+                if clean_part in _NORMALIZED_FIELD_MAP:
+                    return _NORMALIZED_FIELD_MAP[clean_part]
+
     # 2. Hierarchical Keyword & Compound Heuristics
-    # Invoice Number (e.g., "رقم الفاتورة الضريبية", "فاتورة رقم")
-    if ("رقم" in clean_label or "كود" in clean_label or "مرجع" in clean_label or "سند" in clean_label) and "فاتور" in clean_label:
+    # Invoice Number (e.g., "رقم الفاتورة الضريبية", "فاتورة رقم", "Invoice No")
+    if ("رقم" in clean_label or "كود" in clean_label or "مرجع" in clean_label or "سند" in clean_label or "no" in clean_label or "number" in clean_label) and ("فاتور" in clean_label or "invoice" in clean_label or "inv" in clean_label):
         return FIELD_INVOICE_NUMBER
 
     # Invoice Date vs Due Date
-    if "تاريخ" in clean_label:
-        if any(k in clean_label for k in ["استحقاق", "سداد", "دفع", "انتهاء"]):
+    if "تاريخ" in clean_label or "date" in clean_label:
+        if any(k in clean_label for k in ["استحقاق", "سداد", "دفع", "انتهاء", "due", "expiry"]):
             return FIELD_DUE_DATE
-        if any(k in clean_label for k in ["فاتور", "اصدار", "تحرير", "معامل", "بيع"]):
+        if any(k in clean_label for k in ["فاتور", "اصدار", "تحرير", "معامل", "بيع", "invoice", "issue", "bill"]):
             return FIELD_INVOICE_DATE
+        return FIELD_INVOICE_DATE
 
     # Buyer Name & Address
     if any(k in clean_label for k in ["مشتري", "عميل", "زبون", "ساده", "طرف ثاني", "فاتوره الى", "buyer", "customer", "bill to"]):
@@ -257,11 +269,11 @@ def map_arabic_label(label: str, threshold: float = 0.8) -> Optional[str]:
         return FIELD_BUYER_NAME
 
     # Amounts & Totals
-    if "شامل" in clean_label or "نهائي" in clean_label or "مطلوب" in clean_label:
-        if "ضريب" in clean_label or "مجموع" in clean_label or "اجمالي" in clean_label or "مبلغ" in clean_label:
+    if "شامل" in clean_label or "نهائي" in clean_label or "مطلوب" in clean_label or "grand" in clean_label:
+        if "ضريب" in clean_label or "مجموع" in clean_label or "اجمالي" in clean_label or "مبلغ" in clean_label or "total" in clean_label:
             return FIELD_TOTAL_AMOUNT
 
-    if "فرعي" in clean_label or "قبل الضريب" in clean_label or "بدون ضريب" in clean_label or "خاضع" in clean_label:
+    if "فرعي" in clean_label or "قبل الضريب" in clean_label or "بدون ضريب" in clean_label or "خاضع" in clean_label or "subtotal" in clean_label or "sub-total" in clean_label:
         return FIELD_SUBTOTAL
 
     # Tax Rate
@@ -312,6 +324,16 @@ def map_line_item_key(label: str, threshold: float = 0.8) -> Optional[str]:
     # 1. Exact normalized match
     if clean_label in _NORMALIZED_ITEM_MAP:
         return _NORMALIZED_ITEM_MAP[clean_label]
+
+    # 1b. Check bilingual split (e.g. 'Description / الوصف', 'Qty / الكمية', 'Unit Price / سعر الوحدة')
+    if "/" in label or "|" in label or " - " in label:
+        parts = re.split(r"[/|]|\s+-\s+", label)
+        for part in parts:
+            part_str = part.strip()
+            if part_str:
+                clean_part = _normalize_label(part_str)
+                if clean_part in _NORMALIZED_ITEM_MAP:
+                    return _NORMALIZED_ITEM_MAP[clean_part]
 
     # 2. Keyword heuristics
     if "سعر" in clean_label or "فئة" in clean_label or "price" in clean_label or "rate" in clean_label:
